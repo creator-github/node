@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	
+</head>
+<body>
+	<button>GET</button>
+	<ul></ul>
+	<script>
+		const button = document.querySelector("button");
+		const ul = document.querySelector("ul");
+
+		const showData = () => {
+			const url = "https://jsonplaceholder.typicode.com/users";
+			const xhttp = new XMLHttpRequest();
+			xhttp.open("GET", url);
+			xhttp.send();
+			xhttp.addEventListener("readystatechange", () => {
+				if (xhttp.readyState === 4 && xhttp.status === 200) {
+					var obj = JSON.parse(xhttp.response);
+					
+					for (var i = 0; i < obj.length; i++) {
+						let indivObj = obj[i];
+						for (const [key, value] of Object.entries(indivObj)) {
+							let secondObj = indivObj[key];
+							if ((typeof(indivObj[key])) === 'object' && !Array.isArray(indivObj[key])) {
+								let secondLi = document.createElement('li');
+								secondLi.innerHTML = key + ":";
+								ul.append(secondLi);
+								let secondUl = document.createElement('ul');
+								secondLi.append(secondUl);
+								for (const [key, value] of Object.entries(secondObj)) {
+							  	  	let thirdObj = secondObj[key];
+									if ((typeof(thirdObj)) === 'object' && !Array.isArray(thirdObj)) {
+										let li = document.createElement('li');
+							  	  		secondUl.append(li);
+										let thirdLi = document.createElement('li');
+										thirdLi.innerHTML = key + ":";
+										li.append(thirdLi);
+										let thirdUl = document.createElement('ul');
+										thirdLi.append(thirdUl);
+										for (const [key, value] of Object.entries(thirdObj)) {
+								  	  	let li = document.createElement('li');
+									  	li.innerText = (`${key}: ${value}`);
+								  	  	thirdUl.append(li);
+										}
+									} else {
+										let li = document.createElement('li');
+									  	li.innerText = (`${key}: ${value}`);
+								  	  	secondUl.append(li);
+									}
+								}
+							} else {
+								let li = document.createElement('li');
+								li.innerText = (`${key}: ${value}`);
+							  	ul.append(li);
+							}
+						}
+					}
+				}
+			})
+		}
+
+		button.addEventListener('click', showData);
+	</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "home-work-29",
+  "version": "1.0.0",
+  "description": "hillel test project",
+  "main": "file.js",
+  "scripts": {
+    "start": "node file.js",
+    "dev": "nodemon file.js"
+  },
+  "keywords": [
+    "hillel",
+    "test"
+  ],
+  "author": "OK",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
